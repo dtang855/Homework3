@@ -1,93 +1,91 @@
 package edu.university.dhtang.Homework3;
 import java.util.Scanner;
 
-class Element {
-	int index;
-	double key;
-	
-	public Element(int index, double key){
-		this.index = index;
-		this.key = key;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+
+class Element implements Comparable<Element> {
+	Integer num;
+	String str;
+	int flag;
+	public Element(Integer number){
+		num = number;
+		flag = 1;
 	}
-}
-public class MyList {
-	public static void bubbleSortArray(Element[] inputArray) {
-		int n = inputArray.length;
-		Element temp = new Element(0,0);
-		
-		for(int i = 0; i < n-1; i++) {
-			for(int j = 0; j < (n-i-1); j++) {
-				if(inputArray[j].key > inputArray[j+1].key || (inputArray[i].key - inputArray[j+1].key == 0 & inputArray[i].index > inputArray[i].index)) {
-					temp = inputArray[j];
-					inputArray[j] = inputArray[j+1];
-					inputArray[j+1] = temp;
-				}
-			}
+	public Element(String string) {
+		str = string;
+		flag = 0;
+	}
+	public int compareTo(Element o) {
+		if(flag == 1) {
+			return (this.num.compareTo(o.num));
 		}
+		else
+			return (this.str.compareTo(o.str));
 	}
-    public static int binSearch(Element[] aList, double key){
+	
+}
+
+public class MyList{
+	public static boolean binSearch(Element[] aList, Element key){
 		int left = 0;
 		int right = aList.length - 1;
+		
 		while(left <= right){
 			int mid = left + ((right-left) / 2);
-			if(aList[mid].key - key == 0){
-				if(mid != 0) {
-					if(aList[mid].key - aList[mid - 1].key == 0) {
-						right = mid - 1;
-					}
-					else 
-						return aList[mid].index;
-				}
-				else
-					return aList[mid].index;
+			int x = key.compareTo(aList[mid]);
+			if(x == 0){
+				return true;
 			}
-			else if(key < aList[mid].key){
+			else if(x < 0){
 				right = mid - 1;
 			}
 			else{
 				left = mid + 1;
 			}
 		}		
-		return -1;	
+		return false;	
 	}
-//    public static int returnIndex(double key, Double[] arr) {
-//    	int index = 0;
-//    	for(int i = 0; i < arr.length; i++) {
-//    		if(arr[i].equals(key)) {
-//    			index = i;
-//    		}
-//    	}
-//    	return index;
-//    }
-    public static void main(String[] args){
-        Scanner input = new Scanner(System.in);
-        double []inputList = new double[args.length];
+	
+    public static void main(String[] args) throws ParseException{
+        Options options = new Options();
+        options.addOption("--type", true, "type of entry");
+//        options.addOption("--key", true, "key");
+//        options.addOption("--list", true, "list of entries");
         
-        for(int i = 0; i < args.length; i++){
-            inputList[i] = (Double.parseDouble(args[i]));
-        }
+        CommandLineParser parser =  new DefaultParser();
+        CommandLine cmd = parser.parse(options, args);
         
-        Element[] elementArray = new Element[inputList.length];
-        
-        for (int i = 0; i < elementArray.length; i++) {
-        	elementArray[i] = new Element(i, inputList[i]);
-        }
-        
-        bubbleSortArray(elementArray);
-        
-//        for (int i = 0; i < elementArray.length; i++) {
-//        	System.out.println(elementArray[i].key + " " + elementArray[i].index + " ");
+        System.out.println(cmd.getOptionValue("--type"));
+//        String[] list = cmd.getOptionValues("--list");
+//        Element[] elementArray = new Element[list.length];
+//        
+//        if (type == "i") {
+//        	int[] intList = new int[list.length];
+//        	for(int i = 0; i < intList.length; i++) {
+//        		intList[i] = Integer.parseInt(list[i]);
+//        	}
+//            System.arraycopy(intList, 0, elementArray, 0, list.length);
 //        }
-        double key = input.nextDouble();
-        
-        int result = binSearch(elementArray, key);
-
-        if(result != -1) {
-        	System.out.println(result);
-        }
-        else
-        	System.out.println("The key was not found!");
-		input.close();
+//        else {
+//        	System.arraycopy(list, 0, elementArray, 0, list.length);
+//        }
+//
+//        Element key = new Element(cmd.getOptionValue("--key"));
+//
+//        for(int i  = 0; i < elementArray.length; i++) {
+//        	System.out.print(elementArray[i] + " ");
+//        }
+//        boolean result = binSearch(elementArray, key);
+//
+//        if(result == true) {
+//        	System.out.println(1);
+//        }
+//        else
+//        	System.out.println(0);
+//    }
     }
-    
 }

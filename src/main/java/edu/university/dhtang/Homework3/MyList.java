@@ -1,12 +1,6 @@
 package edu.university.dhtang.Homework3;
 import java.util.Scanner;
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-
 class Element implements Comparable<Element> {
 	Integer num;
 	String str;
@@ -50,42 +44,27 @@ public class MyList{
 		return false;	
 	}
 	
-    public static void main(String[] args) throws ParseException{
-        Options options = new Options();
-        options.addOption("--type", true, "type of entry");
-//        options.addOption("--key", true, "key");
-//        options.addOption("--list", true, "list of entries");
-        
-        CommandLineParser parser =  new DefaultParser();
-        CommandLine cmd = parser.parse(options, args);
-        
-        System.out.println(cmd.getOptionValue("--type"));
-//        String[] list = cmd.getOptionValues("--list");
-//        Element[] elementArray = new Element[list.length];
-//        
-//        if (type == "i") {
-//        	int[] intList = new int[list.length];
-//        	for(int i = 0; i < intList.length; i++) {
-//        		intList[i] = Integer.parseInt(list[i]);
-//        	}
-//            System.arraycopy(intList, 0, elementArray, 0, list.length);
-//        }
-//        else {
-//        	System.arraycopy(list, 0, elementArray, 0, list.length);
-//        }
-//
-//        Element key = new Element(cmd.getOptionValue("--key"));
-//
-//        for(int i  = 0; i < elementArray.length; i++) {
-//        	System.out.print(elementArray[i] + " ");
-//        }
-//        boolean result = binSearch(elementArray, key);
-//
-//        if(result == true) {
-//        	System.out.println(1);
-//        }
-//        else
-//        	System.out.println(0);
-//    }
+    public static void main(String[] args){
+
+    	Element[] elementArray = new Element[4];
+    	
+    	Element a = new Element(3);
+    	Element b = new Element(4);
+    	Element c = new Element(5);
+    	Element d = new Element(6);
+    	
+    	elementArray[0] = a;
+    	elementArray[1] = b;
+    	elementArray[2] = c;
+    	elementArray[3] = d;
+    	
+    	Element key = new Element(6);
+        boolean result = binSearch(elementArray, key);
+
+        if(result == true) {
+        	System.out.println(1);
+        }
+        else
+        	System.out.println(0);
     }
 }
